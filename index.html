@@ -15,8 +15,19 @@
     padding-top: env(safe-area-inset-top, 0px); box-sizing: border-box;
   }
 </style>
+<script>
+  // Sostituisci con l'URL della tua web app (termina con /exec)
+  const APP_URL = 'https://script.google.com/macros/s/AKfycbw_qUdlx59ZolM-Lc2OLxKTBStIHMeNHWiJzh7fHwhxMnTmUNSA68rTX-tnP-wR2DXgoQ/exec';
+
+  // Su telefono e tablet il login dentro un iframe viene bloccato (errore 401):
+  // lì apriamo direttamente l'app, con il banner. Sul computer la includiamo senza banner.
+  const touch = window.matchMedia('(pointer: coarse)').matches ||
+                /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (touch) location.replace(APP_URL);
+</script>
 </head>
 <body>
-<iframe src="https://script.google.com/macros/s/AKfycbw_qUdlx59ZolM-Lc2OLxKTBStIHMeNHWiJzh7fHwhxMnTmUNSA68rTX-tnP-wR2DXgoQ/exec" title="Journal"></iframe>
+<iframe id="app" title="Journal"></iframe>
+<script>if (!touch) document.getElementById('app').src = APP_URL;</script>
 </body>
 </html>
